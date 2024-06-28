@@ -11,7 +11,7 @@ SRCS		=	$(wildcard ./*.c)
 INCLUDES	=	../../include
 CC		=	cc
 
-CFLAGS		=	-Wall -Werror -Wextra -I$(INCLUDES)
+CFLAGS		=	-Wall -Werror -Wextra -fPIC -I$(INCLUDES)
 
 OBJS		=	${SRCS:.c=.o}
 
