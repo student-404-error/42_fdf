@@ -15,12 +15,14 @@ INCLUDES	=	./include
 SRC_DIR		=	./src/fdf
 SRCS		=	$(wildcard $(SRC_DIR)/*.c)
 
-LIBFTNAME	=	libft.a
-LIBFT_PATH	=	./src/libft
+LIBFT		=	./src/libft/libft.a
+LIBFT_DIR	=	./src/libft
 
-MINILIBX	=	/usr/local/lib
-MINILIBX_FLAG	=	-L$(MINILIBX) -lmlx -framework OpenGL -framework AppKit
-CC		=	gcc
+LIBGNL		=	./src/gnl/libgnl.a
+GNL_DIR		=	./src/gnl/
+LIBMLX		=	/usr/local/lib
+MLX_FLAGS	=	-L$(LIBMLX) -lmlx -framework OpenGL -framework AppKit
+CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra -g -I$(INCLUDES)
 
 OBJS		=	$(SRCS:.c=.o)
@@ -35,8 +37,9 @@ all		:	$(NAME)
 $(NAME)		:	$(OBJS)
 			@echo "$(GREEN)==========================$(RESET)"
 			@echo "$(GREEN) Building $(MAGENTA)fdf$(GREEN)...$(RESET)"
-			@make -C $(LIBFT_PATH)
-			@$(CC) $(CFLAGS) $(MINILIBX_FLAG) $(OBJS) $(LIBFT_PATH)/$(LIBFTNAME) -o $(NAME)
+			@make -C $(LIBFT_DIR)
+			@make -C $(GNL_DIR)
+			@$(CC) $(CFLAGS) $(MLX_FLAGS) $(OBJS) $(LIBFT) $(LIBGNL) -o $(NAME)
 			@echo "$(GREEN) Build complete!$(RESET)"
 			@echo "$(GREEN)==========================$(RESET)"
 
@@ -44,7 +47,8 @@ clean		:
 			@echo "$(RED)===========$(WHITE)clean$(RED)===========$(RESET)"
 			@echo "$(RED)Cleaning up...$(RESET)"
 			@rm -f $(OBJS)
-			@cd $(LIBFT_PATH) && make clean
+			@cd $(LIBFT_DIR) && make clean
+			@cd $(GNL_DIR) && make clean
 			@echo "$(RED)Cleaning complete!$(RESET)"
 			@echo "$(RED)===========$(WHITE)clean$(RED)===========$(RESET)"
 
@@ -52,7 +56,8 @@ fclean		:	clean
 			@echo "$(RED)===========$(CYAN)fclean$(RED)===========$(RESET)"
 			@echo "$(RED)Deleting .a files...$(RESET)"
 			@rm -f $(NAME)
-			@cd $(LIBFT_PATH) && make fclean
+			@cd $(LIBFT_DIR) && make fclean
+			@cd $(GNL_DIR) && make fclean
 			@echo "$(RED)Delete complete!$(RESET)"
 			@echo "$(RED)===========$(CYAN)fclean$(RED)===========$(RESET)"
 
