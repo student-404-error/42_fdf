@@ -1,4 +1,4 @@
-.DS_Store
-*.o
+[Mm]akefile
 *.a
-Makefile
+*.o
+.DS_Store
