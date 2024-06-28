@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:12:14 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/06/22 18:03:12 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:16:19 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,9 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*gnl_join(char *s1, char *s2);
+char	*gnl_strjoin(char *s1, char *s2);
+size_t	gnl_strlen(char *s);
+char	*gnl_strchr(char *s, int c);
+size_t	gnl_strlcpy(char *dst, char *src, size_t dstsize);
+char	*gnl_strdup(char *s1);
 #endif

@@ -6,19 +6,42 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:29:13 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/05/28 17:53:43 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:17:26 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft.h"
 
-char	*ft_read_line(int fd, char *save, char *buffer)
+char	*gnl_substr(char *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*str;
+
+	if (!s)
+		return (NULL);
+	if (start > gnl_strlen(s))
+		return (malloc(1));
+	if (len > gnl_strlen(s + start))
+		len = gnl_strlen(s + start);
+	str = malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	str[i] = 0;
+	return (str);
+}
+
+char	*gnl_read_line(int fd, char *save, char *buffer)
 {
 	int		bytes_read;
 
 	bytes_read = 1;
-	while (!ft_strchr(save, '\n') && bytes_read > 0)
+	while (!gnl_strchr(save, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
@@ -29,12 +52,12 @@ char	*ft_read_line(int fd, char *save, char *buffer)
 		else if (bytes_read == 0)
 			break ;
 		buffer[bytes_read] = '\0';
-		save = gnl_join(save, buffer);
+		save = gnl_strjoin(save, buffer);
 	}
 	return (save);
 }
 
-char	*ft_save_line(char *line)
+char	*gnl_save_line(char *line)
 {
 	char	*next;
 	int		len;
@@ -44,7 +67,7 @@ char	*ft_save_line(char *line)
 		len++;
 	if (line[len] == 0 || line[1] == 0)
 		return (NULL);
-	next = ft_substr(line, len + 1, ft_strlen(line) - len);
+	next = gnl_substr(line, len + 1, gnl_strlen(line) - len);
 	if (*next == 0)
 	{
 		free(next);
@@ -71,11 +94,11 @@ char	*get_next_line(int fd)
 	}
 	if (!buffer)
 		return (NULL);
-	line = ft_read_line(fd, save, buffer);
+	line = gnl_read_line(fd, save, buffer);
 	free(buffer);
 	buffer = NULL;
 	if (!line)
 		return (NULL);
-	save = ft_save_line(line);
+	save = gnl_save_line(line);
 	return (line);
 }

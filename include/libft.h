@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:07:23 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/06/21 13:47:16 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:34:55 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include <fcntl.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 3
+# endif
 
 typedef struct s_list
 {
@@ -27,6 +31,7 @@ typedef struct s_list
 	int				move[2];
 }	t_list;
 
+char	*get_next_line(int fd);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
