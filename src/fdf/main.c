@@ -1,31 +1,20 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <libft.h>
+#include "libft.h"
 
 int main(int argc, char *argv[])
 {
 	int	fd;
-	(void) argc;
+
+	if (argc < 2)
+	{
+		ft_printf("Few arguments!!\n");
+		return (EXIT_FAILURE);
+	}
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 	{
-		printf("Failed to read\n");
-		return (1);
+		ft_printf("Failed to read\n");
+		return (EXIT_FAILURE);
 	}
-	char	*line;
-	line = get_next_line(fd);
-	printf("line: %s", line);
-	free(line);
-	line = get_next_line(fd);
-	printf("line: %s", line);
-	free(line);
-	line = get_next_line(fd);
-	printf("line: %s", line);
-	free(line);
-	line = get_next_line(fd);
-	printf("line: %s", line);
-	free(line);
-	return EXIT_SUCCESS;
+	parse_map(fd);
+	return (EXIT_SUCCESS);
 }

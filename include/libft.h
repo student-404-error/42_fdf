@@ -17,6 +17,15 @@
 # include <unistd.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <stdarg.h>
+# include <stdint.h>
+
+# define ABS(Value) (Value < 0 ? -Value : Value)
+# define MAX(first, second) (first > second ? first : second)
+# define MAX_FLAG(first, second) (first > second ? 1 : 0)
+# define MIN(first, second) (first < second ? first : second)
+# define MIN_FLAG(first, second) (first < second ? 1 : 0)
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 3
 # endif
@@ -31,7 +40,26 @@ typedef struct s_list
 	int				move[2];
 }	t_list;
 
+// fdf functions
+void	parse_map(int fd);
+// ft_printf functions
+int		ft_printf(const char *format, ...);
+int		ft_print_chr(int c);
+int		ft_print_str(char *str);
+int		ft_print_nbr(int n);
+int		ft_print_unsigned(unsigned int n);
+int		ft_print_hex(unsigned int n, char c);
+char	*convert_to_hexa(unsigned long nbr);
+int		ft_print_ptr(uintptr_t nbr);
+int		ft_print_pct(void);
+// get_next_line functions
+char	*gnl_strjoin(char *s1, char *s2);
+size_t	gnl_strlen(char *s);
+char	*gnl_strchr(char *s, int c);
+size_t	gnl_strlcpy(char *dst, char *src, size_t dstsize);
+char	*gnl_strdup(char *s1);
 char	*get_next_line(int fd);
+// libft part 1
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
