@@ -1,4 +1,6 @@
 [Mm]akefile
 *.a
 *.o
+fdf
 .DS_Store
+src/libft/[Mm]akefile
