@@ -2,6 +2,7 @@
 *.a
 *.o
 *.out
+mlx_linux
 /fdf
 .DS_Store
 !src/libft/[Mm]akefile
