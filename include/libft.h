@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:07:23 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/06/28 15:34:55 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:43:41 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <stdarg.h>
 # include <stdint.h>
+# include <stdio.h>
 
 # define ABS(Value) (Value < 0 ? -Value : Value)
 # define MAX(first, second) (first > second ? first : second)
@@ -42,6 +43,7 @@ typedef struct s_list
 
 // fdf functions
 void	parse_map(int fd);
+void	ft_error(char *msg);
 // ft_printf functions
 int		ft_printf(const char *format, ...);
 int		ft_print_chr(int c);
@@ -90,6 +92,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
+char	**ft_free_split(char **tab);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
