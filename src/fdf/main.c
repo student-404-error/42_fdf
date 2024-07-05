@@ -1,26 +1,17 @@
 #include "fdf.h"
-#define isometric_X 35.264
-
-typedef struct	s_point3D {
-	int	x;
-	int	y;
-	int	z;
-}				t_point3D;
-
-typedef struct	s_point2D {
-	int	x;
-	int	y;
-}				t_point2D;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		*(unsigned int*)dst = color;
+	}
 }
 
-void	bresenham_line(t_point2D p1, t_point2D p2, t_data *img)
+void	bresenham_line(t_point p1, t_point p2, t_data *img)
 {
 	int	dx;
 	int	dy;
@@ -29,8 +20,8 @@ void	bresenham_line(t_point2D p1, t_point2D p2, t_data *img)
 	int	err;
 	int	e2;
 
-	dx = abs(p2.x - p1.x);
-	dy = abs(p2.y - p1.y);
+	dx = abs((int)p2.x - (int)p1.x);
+	dy = abs((int)p2.y - (int)p1.y);
 	sx = (p1.x < p2.x) ? 1 : -1;
 	sy = (p1.y < p2.y) ? 1 : -1;
 	err = dx - dy;
@@ -52,6 +43,12 @@ void	bresenham_line(t_point2D p1, t_point2D p2, t_data *img)
 	}
 }
 
+int	main(int argc, char *argv[])
+{
+	open_file(argc, argv);
+	return (EXIT_SUCCESS);
+}
+/*
 int main(int argc, char *argv[])
 {
 	t_point3D	p3d;
@@ -74,14 +71,31 @@ int main(int argc, char *argv[])
 	img.img = mlx_new_image(vars.mlx, 500, 500);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 
-	p2d.x = sin(45 * PI / 180) * (p3d.x - p3d.y) * 10;
-	p2d.y = sin(45 * PI / 180) * (p3d.x + p3d.y) * 10;
-	p2d2.x = sin(45 * PI / 180) * (p3d2.x - p3d2.y) * 10;
-	p2d2.y = sin(45 * PI / 180) * (p3d2.x + p3d2.y) * 10;
-
-	bresenham_line(p2d, p2d2, &img);
+	p2d.x = cos(30 * PI / 180) * (p3d.x - p3d.y) * 10;
+	p2d.y = (sin(30 * PI / 180) * (p3d.x + p3d.y) - p3d.z) * 10;
+	p2d2.x = cos(30 * PI / 180) * (p3d2.x - p3d2.y) * 10;
+	p2d2.y = (sin(30 * PI / 180) * (p3d2.x + p3d2.y) - p3d2.z) * 10;
+	if (p2d.x >= 0 && p2d.x < 500 && p2d.y >= 0 && p2d.y < 500 && 
+	    p2d2.x >= 0 && p2d2.x < 500 && p2d2.y >= 0 && p2d2.y < 500) {
+		bresenham_line(p2d, p2d2, &img);
+	}
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 
 	mlx_loop(vars.mlx);
 	return EXIT_SUCCESS;
 }
+
+void	test()
+{
+	int	i = 0, j = 0;
+
+	while (i < column)
+	{
+		while (j < row)
+		{
+			
+			j++;
+		}
+		i++;
+	}
+}*/
