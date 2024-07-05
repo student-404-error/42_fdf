@@ -6,25 +6,12 @@
 /*   By: seong-ki <seong-ki@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 11:25:23 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/05/23 19:35:49 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:42:56 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**ft_malloc_error(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-	return (NULL);
-}
 
 static int	ft_word_len(char const *s, char c)
 {
@@ -74,7 +61,7 @@ static char	**make_strs(char const *str, char c)
 		word_len = ft_word_len(str, c);
 		strs[i] = malloc(sizeof(char) * (word_len + 1));
 		if (strs[i] == NULL)
-			return (ft_malloc_error(strs));
+			return (ft_free_split(strs));
 		ft_strlcpy(strs[i], str, word_len + 1);
 		str += word_len;
 		i++;
