@@ -6,13 +6,14 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:27:29 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/05 14:23:28 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/06 20:51:59 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # include "libft.h"
+# include <fcntl.h>
 # include <mlx.h>
 # include <math.h>
 
@@ -45,6 +46,8 @@ typedef struct s_vars {
 	void	*mlx;
 }				t_vars;
 
+// fdf functions
+void	parse_map(int fd);
 int		open_file(int ac, char **av);
 void	parse_map(int fd);
 #endif // !FDF_H

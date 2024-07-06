@@ -1,4 +1,5 @@
 #include "fdf.h"
+#include "libft.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -46,6 +47,7 @@ void	bresenham_line(t_point p1, t_point p2, t_data *img)
 int	main(int argc, char *argv[])
 {
 	open_file(argc, argv);
+	ft_printf("%d", 212);
 	return (EXIT_SUCCESS);
 }
 /*
