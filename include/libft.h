@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:07:23 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/05 14:43:41 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/06 19:40:36 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ typedef struct s_list
 	struct s_list	*prev;
 	struct s_list	*next;
 	int				content;
-	int				lis;
-	int				idx;
-	int				move[2];
 }	t_list;
 
 // fdf functions
