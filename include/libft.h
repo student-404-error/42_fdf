@@ -6,35 +6,21 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:07:23 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/06 20:15:18 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/06 20:52:14 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <limits.h>
-# include <fcntl.h>
 # include <stdarg.h>
 # include <stdint.h>
-# include <stdio.h>
-# include "data_structure.h"
-
-# define ABS(Value) (Value < 0 ? -Value : Value)
-# define MAX(first, second) (first > second ? first : second)
-# define MAX_FLAG(first, second) (first > second ? 1 : 0)
-# define MIN(first, second) (first < second ? first : second)
-# define MIN_FLAG(first, second) (first < second ? 1 : 0)
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 3
 # endif
 
-// fdf functions
-void	parse_map(int fd);
-void	ft_error(char *msg);
 // ft_printf functions
 int		ft_printf(const char *format, ...);
 int		ft_print_chr(int c);
@@ -91,10 +77,6 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-// bonus part
-t_node	*ft_lstnew(int data);
-t_node	*ft_lstlast(t_node *lst);
-void	ft_lstadd_front(t_node **lst, t_node *new);
-void	ft_lstadd_back(t_node **lst, t_node *new);
-int		ft_lstsize(t_node *lst);
+// error
+void	ft_error(char *msg);
 #endif
