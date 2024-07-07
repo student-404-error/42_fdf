@@ -47,7 +47,6 @@ void	bresenham_line(t_point p1, t_point p2, t_data *img)
 int	main(int argc, char *argv[])
 {
 	open_file(argc, argv);
-	ft_printf("%d", 212);
 	return (EXIT_SUCCESS);
 }
 /*
