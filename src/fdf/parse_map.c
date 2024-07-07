@@ -6,7 +6,7 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:15:46 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/06 18:03:52 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/07 14:58:02 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,28 @@
 // {
 //
 // }
+/*
+float	*get_color(char *line)
+{
+	char	**color;
 
-t_point	*create_point(int x, int y, int z)
+	color = ft_split(line, ',');
+	if (color[1] == NULL)
+	{
+		
+	}
+	
+	// color will be 0x-------- or nothing
+}
+*/
+t_point	*create_point(int x, int y, int z, char *line)
 {
 	t_point	*point;
 
 	point = malloc(sizeof(t_point));
 	point->x = cos(30 * PI / 180) * (x - y);
 	point->y = sin(30 * PI / 180) * (x + y) - z;
-	point->flag = 0;
+	point->color = get_color(line);
 	return (point);
 }
 
@@ -38,7 +51,7 @@ void	create_row(int line_num, char *line)
 	i = 0;
 	while (row[i] && row[i][0] != '\n')
 	{
-		p = create_point(i, line_num, ft_atoi(row[i]));
+		p = create_point(i, line_num, ft_atoi(row[i]), line);
 	//	printf("%f %f %d\n", p->x, p->y, p->flag);
 		free(p);
 		i++;
