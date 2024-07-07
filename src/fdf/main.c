@@ -1,49 +1,6 @@
 #include "fdf.h"
 #include "libft.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-	{
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-		*(unsigned int*)dst = color;
-	}
-}
-
-void	bresenham_line(t_point p1, t_point p2, t_data *img)
-{
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
-
-	dx = abs((int)p2.x - (int)p1.x);
-	dy = abs((int)p2.y - (int)p1.y);
-	sx = (p1.x < p2.x) ? 1 : -1;
-	sy = (p1.y < p2.y) ? 1 : -1;
-	err = dx - dy;
-
-	while (1)
-	{
-		my_mlx_pixel_put(img, p1.x, p1.y, 0x0000FF00);
-		if (p1.x == p2.x && p1.y == p2.y)
-			break;
-		e2 = err * 2;
-		if (e2 > -dy) {
-			err -= dy;
-			p1.x += sx;
-		}
-		if (e2 < dx) {
-			err += dx;
-			p1.y += sy;
-		}
-	}
-}
-
 int	main(int argc, char *argv[])
 {
 	open_file(argc, argv);
