@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_isempty_que.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 10:48:52 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/06 20:14:19 by seong-ki         ###   ########.fr       */
+/*   Created: 2024/07/07 16:19:10 by seong-ki          #+#    #+#             */
+/*   Updated: 2024/07/07 19:19:48 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "data_structure.h"
 
-t_node	*ft_lstnew(int data)
+int	isempty_que(t_queue *queue)
 {
-	t_node	*new_node;
-
-	new_node = malloc(sizeof(t_node));
-	if (!new_node)
-		return (NULL);
-	new_node->data = data;
-	new_node->next = NULL;
-	new_node->prev = NULL;
-	return (new_node);
+	if (queue->size == 0)
+		return (1);
+	return (0);
 }
