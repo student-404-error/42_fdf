@@ -6,7 +6,7 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:27:29 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/07 14:20:12 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:47:48 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ typedef struct s_vars {
 }				t_vars;
 
 // fdf functions
-void	parse_map(int fd);
 int		open_file(int ac, char **av);
 void	parse_map(int fd);
+void	bresenham_line(t_point p1, t_point p2, t_data *img);
+void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
 #endif // !FDF_H
