@@ -6,7 +6,7 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:27:29 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/06 20:51:59 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/07 14:20:12 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 typedef struct s_point {
 	float	x;
 	float	y;
-	int		flag;
+	float	argb[4];
 }				t_point;
 
 typedef struct s_map {
