@@ -30,45 +30,60 @@ float	*get_color(char *line)
 	// color will be 0x-------- or nothing
 }
 */
-t_point	*create_point(int x, int y, int z/*, char *line*/)
+t_point	create_point(int x, int y, int z/*, char *line*/)
 {
-	t_point	*point;
+	t_point	point;
 
-	point = malloc(sizeof(t_point));
-	point->x = cos(30 * PI / 180) * (x - y);
-	point->y = sin(30 * PI / 180) * (x + y) - z;
+	point.x = cos(30 * PI / 180) * (x - y);
+	point.y = sin(30 * PI / 180) * (x + y) - z;
 	//point->color = get_color(line);
-	point->argb[0] = 256;
-	point->argb[1] = 256;
-	point->argb[2] = 256;
-	point->argb[3] = 256;
+	point.argb[0] = 256;
+	point.argb[1] = 256;
+	point.argb[2] = 256;
+	point.argb[3] = 256;
 	return (point);
 }
 
-void	create_row(int line_num, char *line)
+t_point	*first_row(t_point *row, int column, t_point p)
+{
+	t_point	*new_row;
+
+	new_row = malloc(sizeof(t_point) * (column + 1));
+	// while (i < column)
+	// {
+	// 	new_row[i] = row[i];
+	// 	i++;
+	// }
+	ft_memcpy((void *) new_row, (void *) row, column);
+	free(row);
+	new_row[column] = p;
+	return (new_row);
+}
+
+t_point	*create_row(int y, char *line)
 {
 	char		**row;
 	static int	column;
-	int			i;
-	t_point		*p;
+	int			x;
+	t_point		*points;
 
 	row = ft_split(line, ' ');	// row is allocated. It must be freed.
-	i = 0;
-	while (row[i] && row[i][0] != '\n')
+	points = NULL;
+	x = 0;
+	while (row[x] && row[x][0] != '\n')
 	{
-		p = create_point(i, line_num, ft_atoi(row[i]));
-		printf("%f %f\n", p->x, p->y);
-		free(p);
-		i++;
+		points = first_row(points, x,  create_point(x, y, ft_atoi(row[x])));
+		printf("%f %f\n", points[x].x, points[x].y);
+		x++;
 	}
-	printf("column: %d\n", i);
-	if (column != 0 && column != i)
+	if (column != 0 && column != x)
 	{
 		printf("error\n");
 		exit(1);
 	}
-	column = i;
+	column = x;
 	ft_free_split(row);			// row is freed here.
+	return (points);
 }
 
 void	parse_map(int fd)
@@ -82,7 +97,8 @@ void	parse_map(int fd)
 	while (line)
 	{
 		ft_printf("%s", line);
-		create_row(row, line);
+		// matrix[row] = create_row(row, line);
+		// row 만드는 것과 같은 방식으로 column도 만들면 됨.
 		free(line);
 		line = get_next_line(fd);
 	//	if (column != (int)ft_strlen(line) && ft_strlen(line) != 0)
