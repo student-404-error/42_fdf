@@ -30,50 +30,55 @@ float	*get_color(char *line)
 	// color will be 0x-------- or nothing
 }
 */
-t_point	create_point(int x, int y, int z/*, char *line*/)
+t_point	*create_point(int x, int y, int z/*, char *line*/)
 {
-	t_point	point;
+	t_point	*point;
 
-	point.x = cos(30 * PI / 180) * (x - y);
-	point.y = sin(30 * PI / 180) * (x + y) - z;
+	point = (t_point *) malloc(sizeof(t_point));
+	point->x = cos(30 * PI / 180) * (x - y);
+	point->y = sin(30 * PI / 180) * (x + y) - z;
 	//point->color = get_color(line);
-	point.argb[0] = 256;
-	point.argb[1] = 256;
-	point.argb[2] = 256;
-	point.argb[3] = 256;
+	point->argb[0] = 256;
+	point->argb[1] = 256;
+	point->argb[2] = 256;
+	point->argb[3] = 256;
+	point->next = NULL;
 	return (point);
 }
 
-t_point	*first_row(t_point *row, int column, t_point p)
+void	join_point(t_point **row, t_point *new_point)
 {
-	t_point	*new_row;
+	t_point	*last_node;
 
-	new_row = malloc(sizeof(t_point) * (column + 1));
-	// while (i < column)
-	// {
-	// 	new_row[i] = row[i];
-	// 	i++;
-	// }
-	ft_memcpy((void *) new_row, (void *) row, column);
-	free(row);
-	new_row[column] = p;
-	return (new_row);
+	if (*row == NULL)
+		*row = new_point;
+	else 
+	{
+		last_node = *row;
+		while (last_node->next)
+			last_node = last_node->next;
+		printf("%f %f\n", last_node->x, last_node->y);
+		last_node->next = new_point;
+	}
 }
 
-t_point	*create_row(int y, char *line)
+t_line	*create_row(int y, char *line)
 {
-	char		**row;
-	static int	column;
 	int			x;
-	t_point		*points;
+	char		**points;
+	t_point		*pt;
+	static int	column;
+	t_line		*row;
 
-	row = ft_split(line, ' ');	// row is allocated. It must be freed.
-	points = NULL;
+	row = malloc(sizeof(t_line));
+	if (!row)
+		return (NULL);
+	points = ft_split(line, ' ');	// row is allocated. It must be freed.
+	pt = NULL;
 	x = 0;
-	while (row[x] && row[x][0] != '\n')
+	while (points[x] && points[x][0] != '\n')
 	{
-		points = first_row(points, x,  create_point(x, y, ft_atoi(row[x])));
-		printf("%f %f\n", points[x].x, points[x].y);
+		join_point(&pt, create_point(x, y, ft_atoi(points[x])));
 		x++;
 	}
 	if (column != 0 && column != x)
@@ -82,32 +87,68 @@ t_point	*create_row(int y, char *line)
 		exit(1);
 	}
 	column = x;
-	ft_free_split(row);			// row is freed here.
-	return (points);
+	ft_free_split(points);			// row is freed here.
+	row->line = pt;
+	row->next = NULL;
+	return (row);
+}
+void	join_line(t_line **matrix, t_line *new_row)
+{
+	t_line	*last_row;
+
+	if (*matrix == NULL)
+		*matrix = new_row;
+	else
+	{
+		last_row = *matrix;
+		while (last_row->next)
+			last_row = last_row->next;
+		last_row->next = new_row;
+	}
+}
+void	prt_matrix(t_map *map)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	while (map->matrix)
+	{
+		j = 0;
+		while (map->matrix->line)
+		{
+			printf("%d %d: %f %f |", i, j, map->matrix->line->x, map->matrix->line->y);
+			map->matrix->line = map->matrix->line->next;
+			j++;
+		}
+		printf("\n");
+		map->matrix = map->matrix->next;
+		i++;
+	}
 }
 
-void	parse_map(int fd)
+t_map	*parse_map(int fd)
 {
 	char	*line;
-	int	row;
-//	int	column;
+	int		y;
+	t_map	*map;
+	//	int	column;
 
-	row = 0;
+	map = malloc(sizeof(t_map));
+	if (map == NULL)
+		return (NULL);
+	y = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
 		ft_printf("%s", line);
-		// matrix[row] = create_row(row, line);
-		// row 만드는 것과 같은 방식으로 column도 만들면 됨.
+		join_line(&map->matrix, create_row(y, line));	// 한 줄이 반환이 되는거임.
 		free(line);
 		line = get_next_line(fd);
-	//	if (column != (int)ft_strlen(line) && ft_strlen(line) != 0)
-	//	{
-	//		ft_printf("Found wrong line length. Exiting. %d\n", ft_strlen(line));
-	//		exit(EXIT_FAILURE);
-	//	}
-		row++;
+		y++;
 	}
+	prt_matrix(map);
 	// create_points();
 	// isometric_projection();
+	return (map);
 }

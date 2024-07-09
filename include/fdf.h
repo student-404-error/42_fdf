@@ -22,16 +22,22 @@
 # define HEIGHT 500
 
 typedef struct s_point {
-	float	x;
-	float	y;
-	float	argb[4];
-}				t_point;
+	float			x;
+	float			y;
+	float			argb[4];
+	struct s_point	*next;
+}	t_point;
+
+typedef struct s_line {
+	t_point			*line;
+	struct s_line	*next;
+}	t_line;
 
 typedef struct s_map {
-	struct s_point	**matrix;
-	int				column;
-	int				row;
-}				t_map;
+	t_line	*matrix;
+	int		column;
+	int		row;
+}	t_map;
 
 typedef struct s_data {
 	void	*img;
@@ -48,7 +54,7 @@ typedef struct s_vars {
 
 // fdf functions
 int		open_file(int ac, char **av);
-void	parse_map(int fd);
 void	bresenham_line(t_point p1, t_point p2, t_data *img);
 void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
+t_map	*parse_map(int fd);
 #endif // !FDF_H
