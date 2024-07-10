@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:19:11 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/06 20:48:07 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:22:26 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_format(va_list args, char c)
 	return (total_len);
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_printf(char *format, ...)
 {
 	va_list	args;
 	int		i;

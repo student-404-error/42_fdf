@@ -6,13 +6,13 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:48:15 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/05/22 11:05:52 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:29:35 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(char *s, int c)
 {
 	int	i;
 

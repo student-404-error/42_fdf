@@ -6,13 +6,13 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:51:27 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/05/23 15:50:34 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:29:54 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char *set)
 {
 	char		*str;
 	size_t		start;

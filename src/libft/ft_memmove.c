@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:50:44 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/05/23 19:35:19 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:28:16 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	ft_mem(unsigned char *d, unsigned char *s, size_t len)
 	}
 }
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dst, void *src, size_t len)
 {
 	unsigned char	*d;
 	unsigned char	*s;

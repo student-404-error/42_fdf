@@ -6,34 +6,34 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:29:13 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/06/24 15:17:26 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 22:54:28 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*gnl_substr(char *s, unsigned int start, size_t len)
+char    *gnl_strjoin(char *s1, char *s2)
 {
-	size_t	i;
-	char	*str;
+    char    *result;
+    size_t  s1_len;
+    size_t  s2_len;
 
-	if (!s)
-		return (NULL);
-	if (start > gnl_strlen(s))
-		return (malloc(1));
-	if (len > gnl_strlen(s + start))
-		len = gnl_strlen(s + start);
-	str = malloc((len + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		str[i] = s[start + i];
-		i++;
-	}
-	str[i] = 0;
-	return (str);
+    if (s1 == NULL)
+    {
+        s1 = malloc(sizeof(char) * 1);
+        s1[0] = '\0';
+    }
+    if (!s1 || !s2)
+        return (NULL);
+    s1_len = ft_strlen(s1);
+    s2_len = ft_strlen(s2);
+    result = malloc(sizeof(char) * (s1_len + s2_len + 1));
+    if (!result)
+        return (result);
+    ft_strlcpy(result, s1, s1_len + 1);
+    ft_strlcpy(result + s1_len, s2, s2_len + 1);
+    free(s1);
+    return (result);
 }
 
 char	*gnl_read_line(int fd, char *save, char *buffer)
@@ -41,7 +41,7 @@ char	*gnl_read_line(int fd, char *save, char *buffer)
 	int		bytes_read;
 
 	bytes_read = 1;
-	while (!gnl_strchr(save, '\n') && bytes_read > 0)
+	while (!ft_strchr(save, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
@@ -61,37 +61,40 @@ char	*gnl_save_line(char *line)
 {
 	char	*next;
 	int		len;
+	int		i;
 
 	len = 0;
 	while (line[len] != '\0' && line[len] != '\n')
 		len++;
 	if (line[len] == 0 || line[1] == 0)
 		return (NULL);
-	next = gnl_substr(line, len + 1, gnl_strlen(line) - len);
-	if (*next == 0)
+	next = malloc(sizeof(char) * (ft_strlen(line) - len + 1));
+	if (!next)
+		return (NULL);
+	i = 0;
+	while (line[len + 1 + i] != '\0')
 	{
-		free(next);
-		next = NULL;
+		next[i] = line[len + 1 + i];
+		i++;
 	}
+	next[i] = '\0';
 	line[len + 1] = '\0';
 	return (next);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int err)
 {
 	char		*line;
 	char		*buffer;
 	static char	*save;
 
-	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0 || err < 0)
 	{
 		free(save);
-		free(buffer);
 		save = NULL;
-		buffer = NULL;
 		return (NULL);
 	}
+	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
 	line = gnl_read_line(fd, save, buffer);

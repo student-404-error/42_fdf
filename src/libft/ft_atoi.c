@@ -6,13 +6,13 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:46:50 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/06/21 13:47:02 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:25:34 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long	ft_atoi(const char *str)
+long	ft_atoi(char *str)
 {
 	long	n;
 	int		sign;

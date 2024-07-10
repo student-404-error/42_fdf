@@ -6,13 +6,13 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:50:59 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/06/28 15:28:38 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:26:48 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	if (s == NULL)
 		return (NULL);
