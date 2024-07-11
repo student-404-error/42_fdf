@@ -38,7 +38,7 @@ t_point	*create_point(int x, int y, int z/*, char *line*/)
 	point = (t_point *) malloc(sizeof(t_point));
 	if (!point)
 		return (NULL);
-	point->x = cos(30 * PI / 180) * (x - y);
+	point->x = /*cos(30 * PI / 180)*/ 0.866025 * (x - y);
 	point->y = sin(30 * PI / 180) * (x + y) - z;
 	//point->color = get_color(line);
 	point->argb[0] = 256;
@@ -98,6 +98,7 @@ t_line	*create_row(int y, char *line)
 		x++;
 	}
 	ft_free_split(points);			// row is freed here.
+	printf("%d\n", x);
 	if (column != 0 && column != x)
 	{
 		printf("Find wrong length!!\n");
@@ -144,7 +145,7 @@ void	prt_matrix(t_map *map)
 		point = row->line;
 		while (point)
 		{
-			printf("%d %d: %f %f\n", i, j, point->x, point->y);
+			printf("%d %d: %f %f\n", i, j, WIDTH / 2 - point->x, HEIGHT / 2 - point->y);
 			point = point->next;
 			j++;
 		}
@@ -203,7 +204,8 @@ t_map	*parse_map(int fd)
 	while ((line = get_next_line(fd, 1)) != NULL)
 	{
 		ft_printf("%s", line);
-		if (join_line(&map->matrix, create_row(y, line)) == -1)	// 한 줄이 반환이 되는거임.
+
+		if (*line != '\0' && join_line(&map->matrix, create_row(y, line)) == -1)	// 한 줄이 반환이 되는거임.
 		{
 			ft_free_map(map);
 			free(line);
