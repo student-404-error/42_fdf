@@ -6,7 +6,7 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:27:29 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/12 02:10:06 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/12 04:11:14 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void	bresenham_line(t_point p1, t_point p2, t_data *img);
 void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_map	*parse_map(int fd);
 void	ft_free_map(t_map *map);
+void	draw_line(t_point p1, t_point p2, t_data *img);
 #endif // !FDF_H

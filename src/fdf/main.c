@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:16:33 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/12 01:01:17 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/12 04:20:07 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	draw_map_to_img(t_map *map, t_data *img)
 {
 	int		x;
 	int		y;
+	int		i;
 	t_line	*row;
 	t_point	*point;
+	t_point *y_point;
 
-	(void)img;
 	row = map->matrix;
 	y = 0;
 	while (row)
@@ -30,14 +31,25 @@ void	draw_map_to_img(t_map *map, t_data *img)
 		point = row->line;
 		while (point)
 		{
-			printf("=============================\n");
-			printf("%d %d: %f %f\n", x, y, WIDTH / 2 - point->x, HEIGHT / 2 - point->y);
+//			printf("=============================\n");
+//			printf("%d %d: %f %f\n", x, y, WIDTH / 2 - point->x, HEIGHT / 2 - point->y);
 			if (row->next != NULL)
-				printf("%d %d: %f %f\n", x, y + 1, WIDTH / 2 - row->next->line->x, HEIGHT / 2 - row->next->line->y);
-			if (point->next != NULL)
-				printf("%d %d: %f %f\n", x + 1, y, WIDTH / 2 - point->next->x, HEIGHT / 2 - point->next->y);
+			{
+				y_point = row->next->line;
+				i = x;
+				while (i--)
+					y_point = y_point->next;
+//				printf("%d %d: %f %f\n", x, y + 1, WIDTH / 2 - y_point->x, HEIGHT / 2 - y_point->y);
+			}
+//			if (point->next != NULL)
+//				printf("%d %d: %f %f\n", x + 1, y, WIDTH / 2 - point->next->x, HEIGHT / 2 - point->next->y);
 			if (point->next != NULL && row->next != NULL)
-				bresenham_line(*point, *(point->next), img);
+			{
+				draw_line(*point, *(point->next), img);
+				draw_line(*y_point, *point, img);
+//				bresenham_line(*point, *(point->next), img);
+//				bresenham_line(*y_point, *point, img);
+			}
 			printf("=============================\n");
 			point = point->next;
 			x++;
