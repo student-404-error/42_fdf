@@ -6,16 +6,13 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:15:46 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 22:53:33 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/12 02:05:06 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include <stdio.h>
 #include "fdf.h"
 
-// void	create_matrix(char *line, int row, int column)
-// {
-//
-// }
 /*
 float	*get_color(char *line)
 {
@@ -38,8 +35,8 @@ t_point	*create_point(int x, int y, int z/*, char *line*/)
 	point = (t_point *) malloc(sizeof(t_point));
 	if (!point)
 		return (NULL);
-	point->x = /*cos(30 * PI / 180)*/ 0.866025 * (x - y);
-	point->y = sin(30 * PI / 180) * (x + y) - z;
+	point->x = /*cos(30 * PI / 180)*/ (0.866025 * (x - y));
+	point->y = (sin(30 * PI / 180) * (x + y) - z);
 	//point->color = get_color(line);
 	point->argb[0] = 256;
 	point->argb[1] = 256;
@@ -55,7 +52,7 @@ void	join_point(t_point **row, t_point *new_point)
 
 	if (*row == NULL)
 		*row = new_point;
-	else 
+	else
 	{
 		last_node = *row;
 		while (last_node->next)
@@ -66,8 +63,8 @@ void	join_point(t_point **row, t_point *new_point)
 
 void	ft_free_points(t_point *pt)
 {
-    t_point *free_point;
-    t_point *tmp_point;
+	t_point	*free_point;
+	t_point	*tmp_point;
 
 	free_point = pt;
 	while (free_point)
@@ -89,7 +86,7 @@ t_line	*create_row(int y, char *line)
 	row = malloc(sizeof(t_line));
 	if (!row)
 		return (NULL);
-	points = ft_split(line, ' ');	// row is allocated. It must be freed.
+	points = ft_split(line, ' ');
 	pt = NULL;
 	x = 0;
 	while (points[x] && points[x][0] != '\n')
@@ -97,8 +94,7 @@ t_line	*create_row(int y, char *line)
 		join_point(&pt, create_point(x, y, ft_atoi(points[x])));
 		x++;
 	}
-	ft_free_split(points);			// row is freed here.
-	printf("%d\n", x);
+	ft_free_split(points);
 	if (column != 0 && column != x)
 	{
 		printf("Find wrong length!!\n");
@@ -132,51 +128,34 @@ int	join_line(t_line **matrix, t_line *new_row)
 
 void	prt_matrix(t_map *map)
 {
-	int	i;
-	int	j;
+	int		x;
+	int		y;
 	t_line	*row;
 	t_point	*point;
-	
+
 	row = map->matrix;
-	i = 0;
+	y = 0;
 	while (row)
 	{
-		j = 0;
+		x = 0;
 		point = row->line;
 		while (point)
 		{
-			printf("%d %d: %f %f\n", i, j, WIDTH / 2 - point->x, HEIGHT / 2 - point->y);
+			printf("=============================\n");
+			printf("%d %d: %f %f\n", x, y, WIDTH / 2 - point->x, HEIGHT / 2 - point->y);
+			if (row->next != NULL)
+				printf("%d %d: %f %f\n", x, y + 1, WIDTH / 2 - row->next->line->x, HEIGHT / 2 - row->next->line->y);
+			if (point->next != NULL)
+				printf("%d %d: %f %f\n", x + 1, y, WIDTH / 2 - point->next->x, HEIGHT / 2 - point->next->y);
+	//		bresenham_line(point, point->next, img);
+			printf("=============================\n");
 			point = point->next;
-			j++;
+			x++;
 		}
 		printf("===================\n");
 		row = row->next;
-		i++;
+		y++;
 	}
-}
-
-void	ft_free_map(t_map *map)
-{
-	t_line	*free_row;
-	t_line	*tmp_row;
-	t_point	*free_point;
-	t_point	*tmp_point;
-
-	free_row = map->matrix;
-	while (free_row)
-	{
-		tmp_row = free_row->next;
-		free_point = free_row->line;
-		while (free_point)
-		{
-			tmp_point = free_point->next;
-			free(free_point);
-			free_point = tmp_point;
-		}
-		free(free_row);
-		free_row = tmp_row;
-	}
-	free(map);
 }
 
 t_map	*init_map(void)
@@ -197,15 +176,13 @@ t_map	*parse_map(int fd)
 	char	*line;
 	int		y;
 	t_map	*map;
-	//	int	column;
 
 	map = init_map();
 	y = 0;
-	while ((line = get_next_line(fd, 1)) != NULL)
+	line = get_next_line(fd, 0);
+	while (line != NULL)
 	{
-		ft_printf("%s", line);
-
-		if (*line != '\0' && join_line(&map->matrix, create_row(y, line)) == -1)	// 한 줄이 반환이 되는거임.
+		if (*line != '\0' && join_line(&map->matrix, create_row(y, line)) == -1)
 		{
 			ft_free_map(map);
 			free(line);
@@ -213,9 +190,10 @@ t_map	*parse_map(int fd)
 			return (NULL);
 		}
 		free(line);
+		line = get_next_line(fd, 0);
 		y++;
 	}
-	prt_matrix(map);
-	ft_free_map(map);
-	return (NULL);
+//	prt_matrix(map);
+//	ft_free_map(map);
+	return (map);
 }
