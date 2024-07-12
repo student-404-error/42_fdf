@@ -6,7 +6,7 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:27:29 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/07 15:47:48 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/12 02:10:06 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <math.h>
 
 # define PI 3.1415926
-# define WIDTH 500
-# define HEIGHT 500
+# define WIDTH 1920
+# define HEIGHT 1080
 
 typedef struct s_point {
 	float			x;
@@ -53,8 +53,9 @@ typedef struct s_vars {
 }				t_vars;
 
 // fdf functions
-int		open_file(int ac, char **av);
+t_map	*open_file(int ac, char **av);
 void	bresenham_line(t_point p1, t_point p2, t_data *img);
 void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_map	*parse_map(int fd);
+void	ft_free_map(t_map *map);
 #endif // !FDF_H

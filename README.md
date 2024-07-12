@@ -13,3 +13,8 @@
 2. zoom in and out
 3. colors
 4. anything else
+---
+## todo for last day in Milestone 2
+1. draw line, -> implement bresenham algo or another one.
+2. change starting point.
+3. fit scaling.
