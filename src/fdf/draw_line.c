@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 15:09:17 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/13 21:01:23 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/13 21:06:44 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-#define SCAILING 2;
+#define SCALING 2;
 
 void	draw_line(t_point p1, t_point p2, t_data *img)
 {
@@ -23,10 +23,10 @@ void	draw_line(t_point p1, t_point p2, t_data *img)
 	float	dx;
 	float	dy;
 
-	p1.x *= SCAILING;
-	p1.y *= SCAILING;
-	p2.x *= SCAILING;
-	p2.y *= SCAILING;
+	p1.x *= SCALING;
+	p1.y *= SCALING;
+	p2.x *= SCALING;
+	p2.y *= SCALING;
 	p1.x += WIDTH / 3;
 	p1.y += HEIGHT / 3;
 	p2.x += WIDTH / 3;
@@ -57,10 +57,10 @@ void	bresenham_line(t_point p1, t_point p2, t_data *img)
 	int	err;
 	int	e2;
 	
-	p1.x *= SCAILING;
-	p1.y *= SCAILING;
-	p2.x *= SCAILING;
-	p2.y *= SCAILING;
+	p1.x *= SCALING;
+	p1.y *= SCALING;
+	p2.x *= SCALING;
+	p2.y *= SCALING;
 	p1.x += WIDTH / 3;
 	p1.y += HEIGHT / 3;
 	p2.x += WIDTH / 3;
@@ -72,18 +72,12 @@ void	bresenham_line(t_point p1, t_point p2, t_data *img)
 	sx = (x < p2.x) ? 1 : -1;
 	sy = (y < p2.y) ? 1 : -1;
 	err = dx + dy;
-	printf("start: (%4f %4f)\n", p1.x, p1.y);
-	printf("target: (%4f %4f)\n", p2.x, p2.y);
-	printf("%3d %3d %3d %3d %4d\n", dx, dy, sx, sy, err);
-	printf(" x   y   err\n");
 	while (1)
 	{
-		printf("%3d %3d", x, y);
 		my_mlx_pixel_put(img, x, y, 0x0000FF00);
 		if (x == (int)p2.x && y == (int)p2.y)
 			break;
 		e2 = err * 2;
-		printf(" %3d\n", e2);
 		if (e2 >= dy)
 		{
 			err += dy;
