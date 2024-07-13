@@ -6,7 +6,7 @@
 3. draw lines
 4. create matrix
 5. change starting point
-6. scailing point
+6. scaling point
 ---
 ## todo bonus
 1. rotate (just calc)
@@ -18,3 +18,6 @@
 1. draw line, -> implement bresenham algo or another one.
 2. change starting point.
 3. fit scaling.
+## todo for first day in Milestone 2
+1. fit scaling.
+2. implement color input.
