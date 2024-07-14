@@ -6,13 +6,13 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:19:07 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/12 00:15:38 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/14 16:46:09 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_map *open_file(int ac, char **av)
+t_map	*open_file(int ac, char **av)
 {
 	int	fd;
 

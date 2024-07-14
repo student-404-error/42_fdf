@@ -6,42 +6,52 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:15:46 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/12 02:05:06 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/14 22:16:56 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "fdf.h"
 
-/*
-float	*get_color(char *line)
+int	hex_char_to_int(char c) {
+	if ('0' <= c && c <= '9')
+		return c - '0';
+	else if ('a' <= c && c <= 'f')
+		return c - 'a' + 10;
+	else if ('A' <= c && c <= 'F')
+		return c - 'A' + 10;
+	return -1;
+}
+
+unsigned int	get_color(char *line)
 {
-	char	**color;
+	char			**color;
+	unsigned int	rgb;
+	int				i;
 
 	color = ft_split(line, ',');
 	if (color[1] == NULL)
+		return (16777215);
+	rgb = 0;
+	i = 2;
+	while (color[1][i] != '\0')
 	{
 		
+		i++;
 	}
-	
-	// color will be 0x-------- or nothing
+	return (rgb);
 }
-*/
 
-t_point	*create_point(int x, int y, int z/*, char *line*/)
+t_point	*create_point(int x, int y, int z, char *line)
 {
 	t_point	*point;
 
 	point = (t_point *) malloc(sizeof(t_point));
 	if (!point)
 		return (NULL);
-	point->x = /*cos(30 * PI / 180)*/ (0.866025 * (x - y));
-	point->y = (sin(30 * PI / 180) * (x + y) - z);
-	//point->color = get_color(line);
-	point->argb[0] = 256;
-	point->argb[1] = 256;
-	point->argb[2] = 256;
-	point->argb[3] = 256;
+	point->x = ((0.866025 * (x - y)) * SCALING) + (WIDTH / 2);
+	point->y = ((0.5 * (x + y) - z) * SCALING) + (HEIGHT / 4);
+	point->color = get_color(line);
 	point->next = NULL;
 	return (point);
 }
@@ -75,13 +85,12 @@ void	ft_free_points(t_point *pt)
 	}
 }
 
-t_line	*create_row(int y, char *line)
+t_line	*create_row(int size, int y, char *line)
 {
 	int			x;
 	char		**points;
 	t_line		*row;
 	t_point		*pt;
-	static int	column;
 
 	row = malloc(sizeof(t_line));
 	if (!row)
@@ -91,21 +100,48 @@ t_line	*create_row(int y, char *line)
 	x = 0;
 	while (points[x] && points[x][0] != '\n')
 	{
-		join_point(&pt, create_point(x, y, ft_atoi(points[x])));
+		join_point(&pt, create_point(x, y, ft_atoi(points[x]), line));
 		x++;
 	}
 	ft_free_split(points);
-	if (column != 0 && column != x)
+	if (size != 0 && size != x)
 	{
 		printf("Find wrong length!!\n");
-		free(row);
-		ft_free_points(pt);
-		return (NULL);
+		return (free(row), ft_free_points(pt), NULL);
 	}
-	column = x;
 	row->line = pt;
 	row->next = NULL;
 	return (row);
+}
+
+int	ft_pointsize(t_point *point)
+{
+	int		len;
+	t_point	*ptr;
+
+	len = 0;
+	ptr = point;
+	while (ptr)
+	{
+		ptr = ptr->next;
+		len++;
+	}
+	return (len);
+}
+
+int	ft_linesize(t_line *line)
+{
+	int		len;
+	t_line	*ptr;
+
+	len = 0;
+	ptr = line;
+	while (ptr)
+	{
+		ptr = ptr->next;
+		len++;
+	}
+	return (len);
 }
 
 int	join_line(t_line **matrix, t_line *new_row)
@@ -124,38 +160,6 @@ int	join_line(t_line **matrix, t_line *new_row)
 		last_row->next = new_row;
 	}
 	return (0);
-}
-
-void	prt_matrix(t_map *map)
-{
-	int		x;
-	int		y;
-	t_line	*row;
-	t_point	*point;
-
-	row = map->matrix;
-	y = 0;
-	while (row)
-	{
-		x = 0;
-		point = row->line;
-		while (point)
-		{
-			printf("=============================\n");
-			printf("%d %d: %f %f\n", x, y, WIDTH / 2 - point->x, HEIGHT / 2 - point->y);
-			if (row->next != NULL)
-				printf("%d %d: %f %f\n", x, y + 1, WIDTH / 2 - row->next->line->x, HEIGHT / 2 - row->next->line->y);
-			if (point->next != NULL)
-				printf("%d %d: %f %f\n", x + 1, y, WIDTH / 2 - point->next->x, HEIGHT / 2 - point->next->y);
-	//		bresenham_line(point, point->next, img);
-			printf("=============================\n");
-			point = point->next;
-			x++;
-		}
-		printf("===================\n");
-		row = row->next;
-		y++;
-	}
 }
 
 t_map	*init_map(void)
@@ -182,7 +186,8 @@ t_map	*parse_map(int fd)
 	line = get_next_line(fd, 0);
 	while (line != NULL)
 	{
-		if (*line != '\0' && join_line(&map->matrix, create_row(y, line)) == -1)
+		if (*line != '\0'\
+		&& join_line(&map->matrix, create_row(map->row, y, line)) == -1)
 		{
 			ft_free_map(map);
 			free(line);
@@ -190,10 +195,11 @@ t_map	*parse_map(int fd)
 			return (NULL);
 		}
 		free(line);
+		map->row = ft_pointsize(map->matrix->line);
 		line = get_next_line(fd, 0);
 		y++;
 	}
-//	prt_matrix(map);
-//	ft_free_map(map);
+	map->column = ft_linesize(map->matrix);
+	printf("%d %d\n", map->row, map->column);
 	return (map);
 }

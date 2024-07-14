@@ -6,7 +6,7 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:27:29 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/13 18:57:47 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/14 22:06:37 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@
 # include <math.h>
 
 # define PI 3.1415926
+# define SCALING 20
 # define WIDTH 1920
 # define HEIGHT 1080
 
 typedef struct s_point {
 	float			x;
 	float			y;
-	float			argb[4];
+	unsigned int	color;
 	struct s_point	*next;
 }	t_point;
 

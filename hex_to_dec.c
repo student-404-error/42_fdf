@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_mlx_pixel_put.c                                 :+:      :+:    :+:   */
+/*   hex_to_dec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/07 15:43:04 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/14 21:41:40 by seong-ki         ###   ########.fr       */
+/*   Created: 2024/07/14 22:12:48 by seong-ki          #+#    #+#             */
+/*   Updated: 2024/07/14 22:16:41 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
-#include <stdio.h>
-
-void    my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	hex_char_to_int(char c)
 {
-    char    *dst;
-
-    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-    {
-        dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-        *(unsigned long long*)dst = color;
-    }
+	if ('0' <= c && c <= '9')
+		return (c - '0');
+	if ('a' <= c && c <= 'z')
+		return (c - 'a' + 10);
+	if ('A' <= c && c <= 'Z')
+		return (c - 'A' + 10);
+	return (-1);
 }
 
+unsigned int	hex_to_int(char *hex_str)
+{
+	unsigned int	result;
+	int				value;
+
+	result = 0;
+	while (*hex_str)
+	{
+		value = hex_char_to_int(*hex_str++);
+		result = (result << 4) | value;
+	}
+	return (result);
+}
