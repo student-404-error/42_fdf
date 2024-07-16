@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:16:33 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 22:50:44 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 23:46:13 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,74 +14,66 @@
 #include "libft.h"
 #include <stdio.h>
 
-void	draw_map_to_img(float scale, t_map *map, t_data *img)
+void	ft_draw(float scale, t_line *row, t_data *img)
 {
 	int		x;
-	int		y;
 	int		i;
-	t_line	*row;
-	t_point	*point;
 	t_point	*y_point;
+	t_point	*point;
 
-	row = map->matrix;
-	y = 0;
-	while (row)
+	x = 0;
+	point = row->line;
+	while (point)
 	{
-		x = 0;
-		point = row->line;
-		while (point)
+		if (row->next != NULL)
 		{
-			if (row->next != NULL)
-			{
-				y_point = row->next->line;
-				i = x;
-				while (i--)
-					y_point = y_point->next;
-			}
-			if (point->next != NULL && row->next != NULL)
-			{
-				bresenham_line(scale, *point, *(point->next), img);
-				bresenham_line(scale, *y_point, *point, img);
-			}
-			point = point->next;
-			x++;
+			y_point = row->next->line;
+			i = x;
+			while (i--)
+				y_point = y_point->next;
 		}
-		row = row->next;
-		y++;
+		if (point->next != NULL && row->next != NULL)
+		{
+			draw_line(scale, *point, *(point->next), img);
+			draw_line(scale, *y_point, *point, img);
+		}
+		point = point->next;
+		x++;
 	}
 }
 
-int	close_window(t_vars *vars)
+void	draw_map_to_img(float scale, t_map *map, t_data *img)
 {
-	if (vars->img_data.img != NULL)
-		mlx_destroy_image(vars->mlx, vars->img_data.img);
-	mlx_destroy_display(vars->mlx);
-	free(vars->mlx);
-	exit(0);
-	return (0);
+	t_line	*row;
+
+	row = map->matrix;
+	while (row)
+	{
+		ft_draw(scale, row, img);
+		row = row->next;
+	}
 }
 
-int	key_press(int keycode, t_vars *vars)
+float	fit_scale(int width)
 {
-	if (keycode == ESC_KEY)
-		close_window(vars);
-	return (0);
+	float	scale;
+
+	scale = 1.0;
+	while (width * scale <= 300)
+		scale += 0.5;
+	return (scale);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_vars		vars;
 	t_map		*map;
-	float		scale;
 	int			width;
 
 	map = open_file(argc, argv);
 	if (map == NULL)
 		return (EXIT_FAILURE);
 	width = (0.866025 * (map->row - 1)) - (0.866025 * -(map->column - 1));
-	scale = 1.0;
-	while (width * scale <= 500)
-		scale += 0.5;
 	vars.mlx = mlx_init();
 	if (vars.mlx == NULL)
 		return (EXIT_FAILURE);
@@ -92,7 +84,7 @@ int	main(int argc, char *argv[])
 	vars.img_data.addr = mlx_get_data_addr(vars.img_data.img, \
 		&vars.img_data.bits_per_pixel, &vars.img_data.line_length, \
 		&vars.img_data.endian);
-	draw_map_to_img(scale, map, &vars.img_data);
+	draw_map_to_img(fit_scale(width), map, &vars.img_data);
 	ft_free_map(map);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img_data.img, 0, 0);
 	mlx_key_hook(vars.win, key_press, &vars);

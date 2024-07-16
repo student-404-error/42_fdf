@@ -5,35 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 15:29:13 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 22:54:28 by seong-ki         ###   ########.fr       */
+/*   Created: 2024/07/17 00:01:25 by seong-ki          #+#    #+#             */
+/*   Updated: 2024/07/17 00:01:27 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char    *gnl_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
-    char    *result;
-    size_t  s1_len;
-    size_t  s2_len;
+	char	*result;
+	size_t	s1_len;
+	size_t	s2_len;
 
-    if (s1 == NULL)
-    {
-        s1 = malloc(sizeof(char) * 1);
-        s1[0] = '\0';
-    }
-    if (!s1 || !s2)
-        return (NULL);
-    s1_len = ft_strlen(s1);
-    s2_len = ft_strlen(s2);
-    result = malloc(sizeof(char) * (s1_len + s2_len + 1));
-    if (!result)
-        return (result);
-    ft_strlcpy(result, s1, s1_len + 1);
-    ft_strlcpy(result + s1_len, s2, s2_len + 1);
-    free(s1);
-    return (result);
+	if (s1 == NULL)
+	{
+		s1 = malloc(sizeof(char) * 1);
+		s1[0] = '\0';
+	}
+	if (!s1 || !s2)
+		return (NULL);
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	result = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!result)
+		return (result);
+	ft_strlcpy(result, s1, s1_len + 1);
+	ft_strlcpy(result + s1_len, s2, s2_len + 1);
+	free(s1);
+	return (result);
 }
 
 char	*gnl_read_line(int fd, char *save, char *buffer)

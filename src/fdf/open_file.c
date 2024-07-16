@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:19:07 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/14 16:46:09 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 23:12:56 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 t_map	*open_file(int ac, char **av)
 {
-	int	fd;
+	int		fd;
+	t_map	*map;
 
 	if (ac < 2)
 	{
@@ -24,5 +25,7 @@ t_map	*open_file(int ac, char **av)
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		ft_error("ERROR in open_file");
-	return (parse_map(fd));
+	map = parse_map(fd);
+	close(fd);
+	return (map);
 }

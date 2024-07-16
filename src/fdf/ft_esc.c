@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_mlx_pixel_put.c                                 :+:      :+:    :+:   */
+/*   ft_esc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/07 15:43:04 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 23:19:23 by seong-ki         ###   ########.fr       */
+/*   Created: 2024/07/16 23:46:27 by seong-ki          #+#    #+#             */
+/*   Updated: 2024/07/16 23:48:17 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+static int	close_window(t_vars *vars)
 {
-	char	*dst;
+	if (vars->img_data.img != NULL)
+		mlx_destroy_image(vars->mlx, vars->img_data.img);
+	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_display(vars->mlx);
+	free(vars->mlx);
+	exit(0);
+	return (0);
+}
 
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-	{
-		dst = data->addr + \
-			(y * data->line_length + x * (data->bits_per_pixel / 8));
-		*(unsigned long long *)dst = color;
-	}
+int	key_press(int keycode, t_vars *vars)
+{
+	if (keycode == ESC_KEY)
+		close_window(vars);
+	return (0);
 }

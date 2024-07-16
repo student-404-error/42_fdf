@@ -6,28 +6,14 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 15:09:17 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 22:55:34 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 23:39:01 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
+#include "algorithm.h"
 #include <stdio.h>
-
-typedef struct s_bresenham
-{
-	int	x1;
-	int	y1;
-	int	x2;
-	int	y2;
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	p1_color;
-	int	p2_color;
-}	t_bresenham;
 
 t_bresenham	create_bresenham(float scale, t_point p1, t_point p2)
 {
@@ -39,15 +25,15 @@ t_bresenham	create_bresenham(float scale, t_point p1, t_point p2)
 	bresen.y2 = (int)(p2.y * scale) + 400;
 	bresen.dx = abs(bresen.x2 - bresen.x1);
 	bresen.dy = -abs(bresen.y2 - bresen.y1);
-	bresen.sx = (bresen.x1 < bresen.x2) ? 1 : -1;
-	bresen.sy = (bresen.y1 < bresen.y2) ? 1 : -1;
+	bresen.sx = MAX_FLAG(bresen.x1, bresen.x2);
+	bresen.sy = MAX_FLAG(bresen.y1, bresen.y2);
 	bresen.err = bresen.dx + bresen.dy;
 	bresen.p1_color = p1.color;
 	bresen.p2_color = p2.color;
 	return (bresen);
 }
 
-void	bresenham_line(float scale, t_point p1, t_point p2, t_data *img)
+void	draw_line(float scale, t_point p1, t_point p2, t_data *img)
 {
 	t_bresenham	bres;
 	int			e2;

@@ -5,35 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 10:52:47 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/10 22:01:43 by seong-ki         ###   ########.fr       */
+/*   Created: 2024/07/17 00:01:14 by seong-ki          #+#    #+#             */
+/*   Updated: 2024/07/17 00:01:17 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char    *ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
-    size_t  i;
-    char    *str;
+	size_t	i;
+	char	*str;
 
-    if (!s)
-        return (NULL);
-    if (start > ft_strlen(s))
-        return (malloc(1)); 
-    if (len > ft_strlen(s + start))
-        len = ft_strlen(s + start);
-    str = malloc(sizeof(char) * (len + 1));
-    if (!str)
-        return (NULL);
-    i = 0;
-    while (i < len)
-    {   
-        str[i] = s[start + i];
-        i++;
-    }
-    str[i] = '\0';
-    return (str);
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (malloc(1));
+	if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
 /*
 #include <stdio.h>

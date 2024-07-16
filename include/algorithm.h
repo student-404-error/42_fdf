@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 20:26:13 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/06 20:32:32 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 23:25:02 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // ==================================MACRO================================
 # define ABS(Value) (Value < 0 ? -Value : Value)
 # define MAX(first, second) (first > second ? first : second)
-# define MAX_FLAG(first, second) (first > second ? 1 : 0)
+# define MAX_FLAG(first, second) (first < second ? 1 : -1)
 # define MIN(first, second) (first < second ? first : second)
 # define MIN_FLAG(first, second) (first < second ? 1 : 0)
 

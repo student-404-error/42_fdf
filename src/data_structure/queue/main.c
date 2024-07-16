@@ -1,4 +1,4 @@
-#include "data_structure.h"
+/*#include "data_structure.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,4 +21,4 @@ int	main(void)
 //	printf("dequeue: %d\n", p->data);
 //	free(p);
 	ft_free_queue(q);
-}
+}*/

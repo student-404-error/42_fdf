@@ -1,26 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_mlx_pixel_put.c                                 :+:      :+:    :+:   */
+/*   rc_size.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/07 15:43:04 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 23:19:23 by seong-ki         ###   ########.fr       */
+/*   Created: 2024/07/16 22:59:44 by seong-ki          #+#    #+#             */
+/*   Updated: 2024/07/16 23:03:43 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	ft_pointsize(t_point *point)
 {
-	char	*dst;
+	int		len;
+	t_point	*ptr;
 
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	len = 0;
+	ptr = point;
+	while (ptr)
 	{
-		dst = data->addr + \
-			(y * data->line_length + x * (data->bits_per_pixel / 8));
-		*(unsigned long long *)dst = color;
+		ptr = ptr->next;
+		len++;
 	}
+	return (len);
+}
+
+int	ft_linesize(t_line *line)
+{
+	int		len;
+	t_line	*ptr;
+
+	len = 0;
+	ptr = line;
+	while (ptr)
+	{
+		ptr = ptr->next;
+		len++;
+	}
+	return (len);
 }
