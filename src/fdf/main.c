@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:16:33 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/14 17:08:03 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:52:58 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(int argc, char *argv[])
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
 					&img.line_length, &img.endian);
 	draw_map_to_img(map, &img);
+	ft_free_map(map);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	mlx_loop(vars.mlx);
 	return (EXIT_SUCCESS);

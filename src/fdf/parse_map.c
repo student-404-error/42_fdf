@@ -6,7 +6,7 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:15:46 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/14 22:16:56 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:50:01 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,22 @@ int	hex_char_to_int(char c) {
 unsigned int	get_color(char *line)
 {
 	char			**color;
-	unsigned int	rgb;
-	int				i;
+	char			*hex;
+	unsigned int	result;
+	int				value;
 
 	color = ft_split(line, ',');
 	if (color[1] == NULL)
-		return (16777215);
-	rgb = 0;
-	i = 2;
-	while (color[1][i] != '\0')
+		return (ft_free_split(color), 16777215);
+	result = 0;
+	hex = color[1] + 2;
+	while (*hex && *hex != '\n')
 	{
-		
-		i++;
+		value = hex_char_to_int(*hex++);
+		result = (result << 4) | value;
 	}
-	return (rgb);
+	ft_free_split(color);
+	return (result);
 }
 
 t_point	*create_point(int x, int y, int z, char *line)
@@ -100,7 +102,7 @@ t_line	*create_row(int size, int y, char *line)
 	x = 0;
 	while (points[x] && points[x][0] != '\n')
 	{
-		join_point(&pt, create_point(x, y, ft_atoi(points[x]), line));
+		join_point(&pt, create_point(x, y, ft_atoi(points[x]), points[x]));
 		x++;
 	}
 	ft_free_split(points);

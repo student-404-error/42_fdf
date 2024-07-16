@@ -6,14 +6,14 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 15:43:04 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/14 21:41:40 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:15:24 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-void    my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void    my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color)
 {
     char    *dst;
 

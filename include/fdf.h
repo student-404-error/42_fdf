@@ -6,7 +6,7 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:27:29 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/14 22:06:37 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:45:14 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <math.h>
 
 # define PI 3.1415926
-# define SCALING 20
+# define SCALING 1.5
 # define WIDTH 1920
 # define HEIGHT 1080
 
@@ -56,9 +56,12 @@ typedef struct s_vars {
 // fdf functions
 t_map	*open_file(int ac, char **av);
 void	bresenham_line(t_point p1, t_point p2, t_data *img);
-void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void    my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
 t_map	*parse_map(int fd);
 void	ft_free_map(t_map *map);
 void	draw_line(t_point p1, t_point p2, t_data *img);
 void	test_line(t_point p1, t_point p2, t_data *img);
+unsigned int	color_inter(unsigned int c1, unsigned int c2, float t);
+double	ft_percent(int start, int end, int current);
+int	ft_gradient(int start, int end, double percent);
 #endif // !FDF_H

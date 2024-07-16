@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 22:12:48 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/14 22:16:41 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:16:28 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,10 @@ unsigned int	hex_to_int(char *hex_str)
 		result = (result << 4) | value;
 	}
 	return (result);
+}
+
+int	main(void)
+{
+	printf("%d\n", hex_to_int("FFEEFF"));
+	printf("%d\n", hex_to_int("FFFFFF"));
 }
