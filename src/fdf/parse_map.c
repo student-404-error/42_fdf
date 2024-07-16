@@ -6,21 +6,22 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:15:46 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 15:50:01 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:56:24 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "fdf.h"
 
-int	hex_char_to_int(char c) {
+int	hex_char_to_int(char c)
+{
 	if ('0' <= c && c <= '9')
-		return c - '0';
+		return (c - '0');
 	else if ('a' <= c && c <= 'f')
-		return c - 'a' + 10;
+		return (c - 'a' + 10);
 	else if ('A' <= c && c <= 'F')
-		return c - 'A' + 10;
-	return -1;
+		return (c - 'A' + 10);
+	return (-1);
 }
 
 unsigned int	get_color(char *line)
@@ -51,8 +52,8 @@ t_point	*create_point(int x, int y, int z, char *line)
 	point = (t_point *) malloc(sizeof(t_point));
 	if (!point)
 		return (NULL);
-	point->x = ((0.866025 * (x - y)) * SCALING) + (WIDTH / 2);
-	point->y = ((0.5 * (x + y) - z) * SCALING) + (HEIGHT / 4);
+	point->x = 0.866025 * (x - y);
+	point->y = 0.5 * (x + y) - z;
 	point->color = get_color(line);
 	point->next = NULL;
 	return (point);
@@ -202,6 +203,5 @@ t_map	*parse_map(int fd)
 		y++;
 	}
 	map->column = ft_linesize(map->matrix);
-	printf("%d %d\n", map->row, map->column);
 	return (map);
 }

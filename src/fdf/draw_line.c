@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 15:09:17 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 19:43:23 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:55:34 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ typedef struct s_bresenham
 	int	p2_color;
 }	t_bresenham;
 
-t_bresenham	create_bresenham(t_point p1, t_point p2)
+t_bresenham	create_bresenham(float scale, t_point p1, t_point p2)
 {
 	t_bresenham	bresen;
 
-	bresen.x1 = (int) p1.x;
-	bresen.y1 = (int) p1.y;
-	bresen.x2 = (int) p2.x;
-	bresen.y2 = (int) p2.y;
+	bresen.x1 = (int)(p1.x * scale) + 960;
+	bresen.y1 = (int)(p1.y * scale) + 400;
+	bresen.x2 = (int)(p2.x * scale) + 960;
+	bresen.y2 = (int)(p2.y * scale) + 400;
 	bresen.dx = abs(bresen.x2 - bresen.x1);
 	bresen.dy = -abs(bresen.y2 - bresen.y1);
 	bresen.sx = (bresen.x1 < bresen.x2) ? 1 : -1;
@@ -47,18 +47,18 @@ t_bresenham	create_bresenham(t_point p1, t_point p2)
 	return (bresen);
 }
 
-void	bresenham_line(t_point p1, t_point p2, t_data *img)
+void	bresenham_line(float scale, t_point p1, t_point p2, t_data *img)
 {
 	t_bresenham	bres;
 	int			e2;
+	int			start;
 
-	bres = create_bresenham(p1, p2);
-	printf("%x %d\n", bres.p1_color, bres.p2_color);
+	bres = create_bresenham(scale, p1, p2);
+	start = bres.x1;
 	while (1)
 	{
-		int color = ft_gradient(bres.p1_color, bres.p2_color, ft_percent(p1.x, p2.x, bres.x1));
-		my_mlx_pixel_put(img, bres.x1, bres.y1, color);
-		printf("%X\n", color);
+		my_mlx_pixel_put(img, bres.x1, bres.y1, ft_gradient(bres.p1_color, \
+		bres.p2_color, ft_percent(start, bres.x2, bres.x1)));
 		if (bres.x1 == bres.x2 && bres.y1 == bres.y2)
 			break ;
 		e2 = bres.err * 2;
