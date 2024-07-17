@@ -6,7 +6,7 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:16:33 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 23:46:13 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:00:37 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ float	fit_scale(int width)
 	float	scale;
 
 	scale = 1.0;
+	if (width == 0)
+		return (scale);
 	while (width * scale <= 300)
 		scale += 0.5;
 	return (scale);

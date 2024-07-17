@@ -6,12 +6,12 @@
 /*   By: seong-ki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 23:02:14 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 23:07:17 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:03:34 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
+#include "libft.h"
 
 t_point	*create_point(int x, int y, int z, char *line)
 {
@@ -48,7 +48,7 @@ t_line	*create_row(int size, int y, char *line)
 	ft_free_split(points);
 	if (size != 0 && size != x)
 	{
-		printf("Find wrong length!!\n");
+		ft_printf("Find wrong length!!\n");
 		return (free(row), ft_free_points(pt), NULL);
 	}
 	row->line = pt;

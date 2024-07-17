@@ -6,7 +6,7 @@
 /*   By: seong-ki <seong-ki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:15:46 by seong-ki          #+#    #+#             */
-/*   Updated: 2024/07/16 23:07:24 by seong-ki         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:02:13 by seong-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ t_map	*parse_map(int fd)
 	map = init_map();
 	y = 0;
 	line = get_next_line(fd, 0);
+	if (!line)
+		return (ft_free_map(map), NULL);
 	while (line != NULL)
 	{
 		if (*line != '\0'\
 		&& join_line(&map->matrix, create_row(map->row, y, line)) == -1)
 		{
-			ft_free_map(map);
-			free(line);
 			get_next_line(fd, -1);
-			return (NULL);
+			return (ft_free_map(map), free(line), NULL);
 		}
 		free(line);
 		map->row = ft_pointsize(map->matrix->line);
